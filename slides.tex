@@ -1,6 +1,5 @@
 \documentclass[aspectratio=169,xcolor=table]{beamer}
 
-\usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc}
 \usepackage{graphicx}     % Allows including images
@@ -11,7 +10,7 @@
 \usepackage{tikz}         % Automata
 \usepackage{bold-extra}   % Bold in texttt
 \usepackage{wrapfig}      % Make some pictures floating
-
+\usepackage[normalem]{ulem} % strikethrough
 
 \usetikzlibrary{automata,positioning}
 \definecolor{cverbbg}{gray}{0.93}
@@ -44,7 +43,7 @@
 %\usetheme{Szeged}
 %\usetheme{Warsaw}
 
-\title[Regexes and automata]{ Regular expressions and automata}
+\title[Regexes and automata]{Regular expressions and automata}
 \author{Adrien Mogenet}
 \institute[CS]{ContentSquare
   \medskip
@@ -87,19 +86,13 @@
 \end{frame}
 
 
-%\begin{frame}
-%\frametitle{Overview}
-%\tableofcontents
-%\end{frame}
-
-
 \begin{frame}
   \frametitle{Objectives}
   \begin{itemize}
-    \item Regexes are simple (really? all the regexes?)
-    \item Regexes are complex (no kidding!)
-    \item Regexes can be fun (at least visual)
-    \item There's an history behind the scene
+    \item Regexes are simple (really? all the regexes?) \pause
+    \item Regexes are complex (no kidding!) \pause
+    \item Regexes can be fun (at least visual) \pause
+    \item There's an history behind the scene \pause
     \item Using regexes in your code is not harmless
   \end{itemize}
 \end{frame}
@@ -124,7 +117,7 @@
       \item 20+ movies starring Chomsky \pause
       \item Even got a bee named after him: \textit{Megachile
           chomskyi} (2013) \pause
-      \item Release his \textit{Chomsky hierarchy} in 1950s \pause
+      \item Released his \textit{Chomsky hierarchy} in 1950s \pause
       \end{itemize}
     \end{column}
   \end{columns}
@@ -157,8 +150,8 @@
   Example of simple arithmetic language:
   \begin{itemize}
   \item $S \to \epsilon$
-  \item $A \to n$ (any number)
   \item $S \to A$
+  \item $A \to n$ (any number)
   \item $A \to ( A )$
   \item $A \to A + A$
   \item $A \to A - A$
@@ -191,7 +184,7 @@
       \begin{center}
         \includegraphics[width=100px]{images/Chomsky-hierarchy.png}
       \end{center}
-      \caption{Fig. 2}{https://en.wikipedia.org/wiki/File:Chomsky-hierarchy.svg}
+      \caption{\url{https://en.wikipedia.org/wiki/File:Chomsky-hierarchy.svg}}
     \end{figure}
 \end{frame}
 
@@ -212,12 +205,12 @@
     \begin{column}{.7\textwidth}
       \begin{itemize}
       \item American mathematician (1909 - 1994) \pause
-      \item Students of Alonzo Church (along with
+      \item Student of Alonzo Church (along with
         Alan Turing, Emil Post) \pause
       \item got the National Medal of Science \pause
       \item Formalized \textit{regular languages} \pause
       \item ...and invented regular expressions (1956) \pause
-      \item (Right after writing alternative proofs to the G\"odel's
+      \item (Right after writing alternative proof to the G\"odel's
         incompleteness theorems)
       \end{itemize}
     \end{column}
@@ -232,8 +225,8 @@
     defined as a language recognized by a finite automaton.
     \textit{i.e.} (equivalent properties):
     \begin{itemize}
-    \item can be accepted by a read-only Turing machine \pause
     \item language of a regular expression \pause
+    \item accepted by a read-only Turing machine \pause
     \item accepted by a nondeterministic finite automaton (NFA) \pause
     \item accepted by a deterministic finite automaton (DFA)
     \end{itemize}
@@ -262,32 +255,32 @@
 
 % https://en.wikipedia.org/wiki/Regular_language
 \begin{frame}{NOT a regular language}
-  \begin{block}{Famous example}
+  \begin{block}{Type-1 grammar (context-sensitive)}
+    \begin{center}
+      $\alpha A \beta \to \alpha \gamma \beta$
+    \end{center}
+  \end{block}
+  \pause
+  \begin{exampleblock}{Famous example}
     \begin{itemize}
     \item Set of strings $\{a^{n}b^{b} | n \geq 0 \}$ \tab \texttt{// aaabbb}
     \end{itemize}
-  \end{block}
-\end{frame}
-
-
-\begin{frame}[fragile]
-  \frametitle{Are regexes really regular?}
-  2000s:
-  \begin{itemize}
-  \item Regexp exceed regular languages (Type-3) and became
-    context-sensitive (Type-1):
-  \item This: \cverb|(.+)\1| $\mapsto$ will match \textit{papa}.
-  \end{itemize}
+  \end{exampleblock}
+  \pause
+  \begin{alertblock}{And so...}
+    THIS CAN'T BE ACCEPTED BY A REGEX!
+  \end{alertblock}
 \end{frame}
 
 
 \begin{frame}
   \frametitle{Translations}
   \begin{itemize}
-  \item French Wikipedia page title: ``Expression rationnelle''
+  \item French Wikipedia page title: ``Expression rationnelle'' \pause
   \item Other available translation that sounds correct (to me):
-    ``Expression normale''
+    ``Expression normale'' \pause
   \item These grammars and languages are everything but ``r\'egulier''
+    \pause
   \item Fun fact: other european countries chose equivalent of
     ``r\'egulier'': \\ Espressione regolare (it), Express\~ao regular
     (pt), Regulj\"ara uttryck (sw), Regul\={a}r\={a} izteiksme (le)
@@ -299,10 +292,53 @@
   \frametitle{Wikipedia War}
   \begin{block}{Please feed the troll}
     \textit{``Ah oui ? Qui d'autre que l'Office Qu\'eb\'ecois pour critiquer cette
-      horreur de mot qui ressemble à l'anglais ?'' \\ -> Moi, modeste
+      horreur de mot qui ressemble \'a l'anglais ?''\\~\\ $ \to $ Moi, modeste
       informaticien et Fran\c{c}ais (...)}
   \end{block}
-  https://fr.wikipedia.org/wiki/Discussion:Expression\_rationnelle
+  \url{https://fr.wikipedia.org/wiki/Discussion:Expression\_rationnelle}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Are regexes really regular?}
+  Meanwhile, in 2000s:
+  \begin{itemize}
+  \item Regexes exceed regular languages (Type-3) and became
+    context-sensitive (Type-1):
+  \item This: \cverb|(.+)\1| $\mapsto$ will match \textit{papa} or \textit{Pika!Pika!}.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Perl regexes performances}
+  Exemple: recognize $a?^n a^n$ against strings $a^n$.
+  \begin{center}
+\begin{cverbatim}
+time perl -e '("a" x 20) =~ /^(a?){20}(a){20}$/;'
+real   0m0.132s
+\end{cverbatim}
+\begin{cverbatim}
+time perl -e '("a" x 26) =~ /^(a?){26}(a){26}$/;'
+real   ???????
+\end{cverbatim}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Perl regexes performances}
+  Exemple: recognize $a?^n a^n$ against strings $a^n$.
+  \begin{center}
+\begin{cverbatim}
+time perl -e '("a" x 20) =~ /^(a?){20}(a){20}$/;'
+real   0m0.132s
+\end{cverbatim}
+\begin{cverbatim}
+time perl -e '("a" x 26) =~ /^(a?){26}(a){26}$/;'
+real   0m11.507s
+\end{cverbatim}
+\end{center}
 \end{frame}
 
 
@@ -330,26 +366,16 @@
 
 
 \begin{frame}
-  \frametitle{Ken Thompson}
-  \begin{columns}[T]
-    \begin{column}{.3\textwidth}
-      \begin{center}
-        \includegraphics[width=100px]{images/ken-thompson.png}
-      \end{center}
-    \end{column}
-    \begin{column}{.7\textwidth}
-      \begin{itemize}
-        \item American computer scientist (1943) \pause
-        \item designed and implemented the original Unix operating
-          system \pause
-        \item co-invented the Go programming language \pause
-        \item Turing Award (for \textit{backdoor attack})
-      \end{itemize}
-    \end{column}
-  \end{columns}
+  \frametitle{Nondeterministic finite automaton}
+  \begin{itemize}
+  \item Introduced in 1959 \pause
+  \item Recognize regular languages \pause
+  \item Reading an input symbol is required for each state transition \pause
+  \item Its transitions are not uniquely determined by its source
+    state and input symbol \pause
+  \end{itemize}
+  And exist under many, many variations.
 \end{frame}
-
-
 % Difference between Thompson and Gluskov etc. automata
 % http://www.cs.nyu.edu/~mohri/pub/glush.pdf
 
@@ -677,7 +703,7 @@
   \end{center}
 \end{frame}
 
-% Step 7
+% Step 8
 \begin{frame}
   \frametitle{Another example}
   Regexp = \ctexttt{abab|abbb} \\
@@ -716,25 +742,22 @@
 
 % ----- End of Animated example -------------------------------------------------
 
-
-\begin{frame}[fragile]
-  \frametitle{Problem: Backtracking!}
-  Exemple: recognize $a?^n a^n$ against strings $a^n$.
-  \begin{center}
-\begin{cverbatim}
-time perl -e '("a" x 20) =~ /^(a?){20}(a){20}\$/;'
-real   0m0.132s
-\end{cverbatim}
-\begin{cverbatim}
-time perl -e '("a" x 26) =~ /^(a?){26}(a){26}\$/;'
-real   0m11.507s
-\end{cverbatim}
-\end{center}
+\begin{frame}
+  \frametitle{Problem}
+  \begin{alertblock}{Problem}
+    Backtracking!
+  \end{alertblock}
+  This is what happened with \ctexttt{(a?){26}(a){26}}.
+  (At least) 2 alternatives:
+  \begin{itemize}
+  \item Thompson's NFA
+  \item DFA (Deterministic Finite Automaton)
+  \end{itemize}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Alternative: Thompson's NFA}
+  \frametitle{Alternative 1: Thompson's NFA}
   \begin{itemize}
   \item Optimized by Ken Thompson, (Bell Telphone Labs Inc.), in a
     1968 CACM paper
@@ -744,10 +767,424 @@ real   0m11.507s
 
 
 \begin{frame}
+  \frametitle{Ken Thompson}
+  \begin{columns}[T]
+    \begin{column}{.3\textwidth}
+      \begin{center}
+        \includegraphics[width=100px]{images/ken-thompson.png}
+      \end{center}
+    \end{column}
+    \begin{column}{.7\textwidth}
+      \begin{itemize}
+        \item American computer scientist (1943) \pause
+        \item Designed and implemented the original Unix operating
+          system \pause
+        \item Co-invented the Go programming language \pause
+        \item Turing Award (for \textit{backdoor attack})
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+% ----- Start of Animated example -----------------------------------------------
+
+% Step 0
+\begin{frame}
+  \frametitle{Thompson's NFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{$\rangle$abbb}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_0)                       [fill=lime] {$s_0$};
+    \node[state] (s_1)          [above right=of s_0] {$s_1$};
+    \node[state] (s_2)          [below right=of s_0] {$s_2$};
+    \node[state] (s_3)          [right=of s_1]       {$s_3$};
+    \node[state] (s_4)          [right=of s_2]       {$s_4$};
+    \node[state] (s_5)          [right=of s_3]       {$s_5$};
+    \node[state] (s_6)          [right=of s_4]       {$s_6$};
+    \node[state] (s_7)          [right=of s_5]       {$s_7$};
+    \node[state] (s_8)          [right=of s_6]       {$s_8$};
+    \node[state,accepting](s_9) [below right=of s_7] {$s_9$};
+    \path[->]
+    (s_0) edge [bend left]  node {} (s_1)
+    (s_0) edge [bend right] node {} (s_2)
+    % top edges
+    (s_1) edge node {a} (s_3)
+    (s_3) edge node {b} (s_5)
+    (s_5) edge node {a} (s_7)
+    % bottom edges
+    (s_2) edge node {a} (s_4)
+    (s_4) edge node {b} (s_6)
+    (s_6) edge node {b} (s_8)
+    % final edges
+    (s_7) edge [bend left]  node {b} (s_9)
+    (s_8) edge [bend right] node {b} (s_9);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+% Step 1
+\begin{frame}
+  \frametitle{Thompson's NFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{$\rangle$abbb}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_0)                       {$s_0$};
+    \node[state] (s_1)          [above right=of s_0] [fill=lime] {$s_1$};
+    \node[state] (s_2)          [below right=of s_0] [fill=lime] {$s_2$};
+    \node[state] (s_3)          [right=of s_1]       {$s_3$};
+    \node[state] (s_4)          [right=of s_2]       {$s_4$};
+    \node[state] (s_5)          [right=of s_3]       {$s_5$};
+    \node[state] (s_6)          [right=of s_4]       {$s_6$};
+    \node[state] (s_7)          [right=of s_5]       {$s_7$};
+    \node[state] (s_8)          [right=of s_6]       {$s_8$};
+    \node[state,accepting](s_9) [below right=of s_7] {$s_9$};
+    \path[->]
+    (s_0) edge [bend left]  node {} (s_1)
+    (s_0) edge [bend right] node {} (s_2)
+    % top edges
+    (s_1) edge node {a} (s_3)
+    (s_3) edge node {b} (s_5)
+    (s_5) edge node {a} (s_7)
+    % bottom edges
+    (s_2) edge node {a} (s_4)
+    (s_4) edge node {b} (s_6)
+    (s_6) edge node {b} (s_8)
+    % final edges
+    (s_7) edge [bend left]  node {b} (s_9)
+    (s_8) edge [bend right] node {b} (s_9);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 2
+\begin{frame}
+  \frametitle{Thompson's NFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{a$\rangle$bbb}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_0)                       {$s_0$};
+    \node[state] (s_1)          [above right=of s_0] {$s_1$};
+    \node[state] (s_2)          [below right=of s_0] {$s_2$};
+    \node[state] (s_3)          [right=of s_1]       [fill=lime] {$s_3$};
+    \node[state] (s_4)          [right=of s_2]       [fill=lime] {$s_4$};
+    \node[state] (s_5)          [right=of s_3]       {$s_5$};
+    \node[state] (s_6)          [right=of s_4]       {$s_6$};
+    \node[state] (s_7)          [right=of s_5]       {$s_7$};
+    \node[state] (s_8)          [right=of s_6]       {$s_8$};
+    \node[state,accepting](s_9) [below right=of s_7] {$s_9$};
+    \path[->]
+    (s_0) edge [bend left]  node {} (s_1)
+    (s_0) edge [bend right] node {} (s_2)
+    % top edges
+    (s_1) edge node {a} (s_3)
+    (s_3) edge node {b} (s_5)
+    (s_5) edge node {a} (s_7)
+    % bottom edges
+    (s_2) edge node {a} (s_4)
+    (s_4) edge node {b} (s_6)
+    (s_6) edge node {b} (s_8)
+    % final edges
+    (s_7) edge [bend left]  node {b} (s_9)
+    (s_8) edge [bend right] node {b} (s_9);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 3
+\begin{frame}
+  \frametitle{Thompson's NFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{ab$\rangle$bb}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_0)                       {$s_0$};
+    \node[state] (s_1)          [above right=of s_0] {$s_1$};
+    \node[state] (s_2)          [below right=of s_0] {$s_2$};
+    \node[state] (s_3)          [right=of s_1]       {$s_3$};
+    \node[state] (s_4)          [right=of s_2]       {$s_4$};
+    \node[state] (s_5)          [right=of s_3]       [fill=lime] {$s_5$};
+    \node[state] (s_6)          [right=of s_4]       [fill=lime] {$s_6$};
+    \node[state] (s_7)          [right=of s_5]       {$s_7$};
+    \node[state] (s_8)          [right=of s_6]       {$s_8$};
+    \node[state,accepting](s_9) [below right=of s_7] {$s_9$};
+    \path[->]
+    (s_0) edge [bend left]  node {} (s_1)
+    (s_0) edge [bend right] node {} (s_2)
+    % top edges
+    (s_1) edge node {a} (s_3)
+    (s_3) edge node {b} (s_5)
+    (s_5) edge node {a} (s_7)
+    % bottom edges
+    (s_2) edge node {a} (s_4)
+    (s_4) edge node {b} (s_6)
+    (s_6) edge node {b} (s_8)
+    % final edges
+    (s_7) edge [bend left]  node {b} (s_9)
+    (s_8) edge [bend right] node {b} (s_9);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 4
+\begin{frame}
+  \frametitle{Thompson's NFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{abb$\rangle$b}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_0)                       {$s_0$};
+    \node[state] (s_1)          [above right=of s_0] {$s_1$};
+    \node[state] (s_2)          [below right=of s_0] {$s_2$};
+    \node[state] (s_3)          [right=of s_1]       {$s_3$};
+    \node[state] (s_4)          [right=of s_2]       {$s_4$};
+    \node[state] (s_5)          [right=of s_3]       {$s_5$};
+    \node[state] (s_6)          [right=of s_4]       {$s_6$};
+    \node[state] (s_7)          [right=of s_5]       {$s_7$};
+    \node[state] (s_8)          [right=of s_6]       [fill=lime] {$s_8$};
+    \node[state,accepting](s_9) [below right=of s_7] {$s_9$};
+    \path[->]
+    (s_0) edge [bend left]  node {} (s_1)
+    (s_0) edge [bend right] node {} (s_2)
+    % top edges
+    (s_1) edge node {a} (s_3)
+    (s_3) edge node {b} (s_5)
+    (s_5) edge node {a} (s_7)
+    % bottom edges
+    (s_2) edge node {a} (s_4)
+    (s_4) edge node {b} (s_6)
+    (s_6) edge node {b} (s_8)
+    % final edges
+    (s_7) edge [bend left]  node {b} (s_9)
+    (s_8) edge [bend right] node {b} (s_9);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 5
+\begin{frame}
+  \frametitle{Thompson's NFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{abbb$\rangle$}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_0)                       {$s_0$};
+    \node[state] (s_1)          [above right=of s_0] {$s_1$};
+    \node[state] (s_2)          [below right=of s_0] {$s_2$};
+    \node[state] (s_3)          [right=of s_1]       {$s_3$};
+    \node[state] (s_4)          [right=of s_2]       {$s_4$};
+    \node[state] (s_5)          [right=of s_3]       {$s_5$};
+    \node[state] (s_6)          [right=of s_4]       {$s_6$};
+    \node[state] (s_7)          [right=of s_5]       {$s_7$};
+    \node[state] (s_8)          [right=of s_6]       {$s_8$};
+    \node[state,accepting](s_9) [below right=of s_7] [fill=lime] {$s_9$};
+    \path[->]
+    (s_0) edge [bend left]  node {} (s_1)
+    (s_0) edge [bend right] node {} (s_2)
+    % top edges
+    (s_1) edge node {a} (s_3)
+    (s_3) edge node {b} (s_5)
+    (s_5) edge node {a} (s_7)
+    % bottom edges
+    (s_2) edge node {a} (s_4)
+    (s_4) edge node {b} (s_6)
+    (s_6) edge node {b} (s_8)
+    % final edges
+    (s_7) edge [bend left]  node {b} (s_9)
+    (s_8) edge [bend right] node {b} (s_9);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% ----- End of Animated example -------------------------------------------------
+
+
+\begin{frame}
   \begin{figure}
     \includegraphics[width=350px]{images/grep1p.png}
-    \caption{\label{fig. 1} Source: https://swtch.com/~rsc/regexp/regexp1.html}
+    \caption{\url{https://swtch.com/~rsc/regexp/regexp1.html}}
   \end{figure}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Alternative 2: DFA}
+  \begin{block}{Property}
+    Each of its transitions is \textbf{uniquely} determined by its source state and
+    input symbol
+  \end{block}
+  \begin{block}{Theorem}
+    Every NFA as an equivalent DFA
+    [\href{https://courses.engr.illinois.edu/cs373/fa2013/Lectures/lec05.pdf}{proof}]
+  \end{block}
+\end{frame}
+
+
+% ----- Start of Animated example -----------------------------------------------
+
+% Step 0
+\begin{frame}
+  \frametitle{DFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{$\rangle$abbb}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_123)                 [fill=lime] {$s_{1,2,3}$};
+    \node[state] (s_245)        [right=of s_123]       {$s_4, s_5$};
+    \node[state] (s_67)         [right=of s_245]       {$s_6, s_7$};
+    \node[state] (s_8)          [above right=of s_67]  {$s_8$};
+    \node[state] (s_9)          [below right=of s_67]  {$s_9$};
+    \node[state,accepting] (s_10)   [below right=of s_8]   {$s_{10}$};
+    \path[->]
+    (s_123) edge node {a} (s_245)
+    (s_245) edge node {b} (s_67)
+    (s_67)  edge [bend left] node {a} (s_8)
+    (s_67)  edge [bend right] node {b} (s_9)
+    (s_8)   edge [bend left] node {b} (s_10)
+    (s_9)   edge [bend right] node {b} (s_10);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 1
+\begin{frame}
+  \frametitle{DFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{a$\rangle$bbb}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_123)                       {$s_{1,2,3}$};
+    \node[state] (s_245)        [right=of s_123] [fill=lime] {$s_4, s_5$};
+    \node[state] (s_67)         [right=of s_245]       {$s_6, s_7$};
+    \node[state] (s_8)          [above right=of s_67]  {$s_8$};
+    \node[state] (s_9)          [below right=of s_67]  {$s_9$};
+    \node[state,accepting] (s_10)   [below right=of s_8]   {$s_{10}$};
+    \path[->]
+    (s_123) edge node {a} (s_245)
+    (s_245) edge node {b} (s_67)
+    (s_67)  edge [bend left] node {a} (s_8)
+    (s_67)  edge [bend right] node {b} (s_9)
+    (s_8)   edge [bend left] node {b} (s_10)
+    (s_9)   edge [bend right] node {b} (s_10);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 2
+\begin{frame}
+  \frametitle{DFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{ab$\rangle$bb}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_123)                       {$s_{1,2,3}$};
+    \node[state] (s_245)        [right=of s_123]       {$s_4, s_5$};
+    \node[state] (s_67)         [right=of s_245] [fill=lime] {$s_6, s_7$};
+    \node[state] (s_8)          [above right=of s_67]  {$s_8$};
+    \node[state] (s_9)          [below right=of s_67]  {$s_9$};
+    \node[state,accepting] (s_10)   [below right=of s_8]   {$s_{10}$};
+    \path[->]
+    (s_123) edge node {a} (s_245)
+    (s_245) edge node {b} (s_67)
+    (s_67)  edge [bend left] node {a} (s_8)
+    (s_67)  edge [bend right] node {b} (s_9)
+    (s_8)   edge [bend left] node {b} (s_10)
+    (s_9)   edge [bend right] node {b} (s_10);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 3
+\begin{frame}
+  \frametitle{DFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{abb$\rangle$b}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_123)                       {$s_{1,2,3}$};
+    \node[state] (s_245)        [right=of s_123]       {$s_4, s_5$};
+    \node[state] (s_67)         [right=of s_245]       {$s_6, s_7$};
+    \node[state] (s_8)          [above right=of s_67]  {$s_8$};
+    \node[state] (s_9)          [below right=of s_67] [fill=lime] {$s_9$};
+    \node[state,accepting] (s_10)   [below right=of s_8]   {$s_{10}$};
+    \path[->]
+    (s_123) edge node {a} (s_245)
+    (s_245) edge node {b} (s_67)
+    (s_67)  edge [bend left] node {a} (s_8)
+    (s_67)  edge [bend right] node {b} (s_9)
+    (s_8)   edge [bend left] node {b} (s_10)
+    (s_9)   edge [bend right] node {b} (s_10);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% Step 4
+\begin{frame}
+  \frametitle{DFA example}
+  Regexp = \ctexttt{abab|abbb} \\
+  Input = \ctexttt{abbb$\rangle$}
+  \par
+  \par
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+    \node[state,initial] (s_123)                       {$s_{1,2,3}$};
+    \node[state] (s_245)        [right=of s_123]       {$s_4, s_5$};
+    \node[state] (s_67)         [right=of s_245]       {$s_6, s_7$};
+    \node[state] (s_8)          [above right=of s_67]  {$s_8$};
+    \node[state] (s_9)          [below right=of s_67]  {$s_9$};
+    \node[state,accepting] (s_10)   [below right=of s_8] [fill=lime] {$s_{10}$};
+    \path[->]
+    (s_123) edge node {a} (s_245)
+    (s_245) edge node {b} (s_67)
+    (s_67)  edge [bend left] node {a} (s_8)
+    (s_67)  edge [bend right] node {b} (s_9)
+    (s_8)   edge [bend left] node {b} (s_10)
+    (s_9)   edge [bend right] node {b} (s_10);
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+% ----- End of Animated example -------------------------------------------------
+
+
+\begin{frame}
+  \frametitle{Mistery from History}
+  \begin{quotation}
+    Why don't everyone use Thompson's NFA or DFA???
+  \end{quotation}
 \end{frame}
 
 
@@ -757,7 +1194,19 @@ real   0m11.507s
   \item Java's \ctexttt{java.util.regex} uses backtracking too, so does PHP
     (PCRE library).
   \item Tcl, Awk, GNU Awk and GNU grep all use... DFA's!
+  \item Google RE2 offers a C++ implementation (+ wrappers)
   \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{PCRE vs Google RE2}
+  \begin{center}
+    \begin{figure}
+      \includegraphics[width=230px]{images/pcre-vs-re2.png}
+      \caption{Numbers from \url{http://sljit.sourceforge.net/regex\_perf.html}}
+    \end{figure}
+  \end{center}
 \end{frame}
 
 
@@ -766,6 +1215,19 @@ real   0m11.507s
   \begin{itemize}
     \item Backreferences (\textit{e.g.} \ctexttt{
         <(.+)>(.*)</(\textbackslash1)>} to identify a closing XML tag)
+    \item Space consumption of DFA can be way higher: \\ NFA: $O(n)$,
+      DFA: $O(2^{n}$), $n$ is for regexp's length
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Conclusion}
+  \begin{itemize}
+    \item Be careful when using regexes
+    \item Think about underlying engine
+    \item Think about worst case usage (user's inputs...)
+    \item Think about \ctexttt{strstr()}
   \end{itemize}
 \end{frame}
 
@@ -773,22 +1235,32 @@ real   0m11.507s
 \begin{frame}
   \frametitle{Bibliography}
   \begin{itemize}
-    \item https://en.wikipedia.org/wiki/Regular\_language
-    \item https://en.wikipedia.org/wiki/Chomsky\_hierarchy
-    \item https://en.wikipedia.org/wiki/Stephen\_Cole\_Kleene
-    \item http://www.cs.ucr.edu/~jiang/cs215/tao-new.pdf
-    \item https://www.debuggex.com/
-    \item http://www.borntosegfault.com/2013/03/regexp-think-dfa.html
+  \item \url{https://en.wikipedia.org/wiki/Regular\_language}
+  \item \url{https://en.wikipedia.org/wiki/Chomsky\_hierarchy}
+  \item \url{https://en.wikipedia.org/wiki/Stephen\_Cole\_Kleene}
+  \item \url{http://www.cs.ucr.edu/~jiang/cs215/tao-new.pdf}
+  \item \url{https://www.debuggex.com/}
+  \item \url{http://www.borntosegfault.com/2013/03/regexp-think-dfa.html}
+  \item \url{http://sljit.sourceforge.net/regex\_perf.html}
+  \item \url{https://en.wikipedia.org/wiki/Thompson's\_construction}
   \end{itemize}
 \end{frame}
 
 
 \begin{frame}
+  \frametitle{\sout{Trolls} Discussions}
+  \begin{itemize}
+  \item \url{http://arstechnica.com/civis/viewtopic.php?f=20\&t=1195549}
+  \item \url{http://www.perlmonks.org/?node\_id=597262}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \frametitle{Illustrations}
   \begin{itemize}
-    \item https://en.wikipedia.org/wiki/File:Chomsky-hierarchy.svg
-    \item https://en.wikipedia.org/wiki/File:Kleene.jpg
-    \item https://en.wikipedia.org/wiki/File:Noam\_Chomsky\_portrait\_2015.jpg
+  \item \url{https://en.wikipedia.org/wiki/File:Chomsky-hierarchy.svg}
+  \item \url{https://en.wikipedia.org/wiki/File:Kleene.jpg}
+  \item \url{https://en.wikipedia.org/wiki/File:Noam\_Chomsky\_portrait\_2015.jpg}
   \end{itemize}
 \end{frame}
 
